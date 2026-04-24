@@ -2,17 +2,16 @@ import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+import utils
 
+# ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Analytics - Fraud Dashboard", layout="wide")
 
 with open("styles/theme.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-st.markdown(
-    "<style>section[data-testid='stSidebar']{display:none;}</style>",
-    unsafe_allow_html=True,
-)
 
+# ---------------- NAV BAR ----------------
 def render_nav(active: str):
     st.markdown("<div class='nav-row'>", unsafe_allow_html=True)
     cols = st.columns(5)
@@ -36,56 +35,176 @@ def render_nav(active: str):
 
 render_nav("Analytics")
 
+# ---------------- PAGE TITLE ----------------
 st.markdown("<div class='page-title'>Analytics & Exploratory Data Analysis</div>", unsafe_allow_html=True)
 
-df = pd.read_csv("creditcard.csv")
+# ---------------- LOAD DATA ----------------
+df = utils.load_data()
 
+# ---------------- RAW DATA ----------------
 with st.expander("Raw Dataset (sample data set)"):
+    st.write(
+        "This table shows a sample of the raw dataset. "
+        "Each row represents one credit card transaction. "
+        "`Class = 0` means legitimate transaction and `Class = 1` means fraud."
+    )
     st.dataframe(df.sample(300), use_container_width=True)
 
-st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
-st.markdown("<div class='chart-title'>Class Distribution (0 = Legit, 1 = Fraud)</div>", unsafe_allow_html=True)
-fig1, ax1 = plt.subplots()
-sns.countplot(x="Class", data=df, palette=["#00C985", "#D62839"], ax=ax1)
-st.pyplot(fig1)
-st.markdown("</div>", unsafe_allow_html=True)
+# =====================================================
+# OBJECTIVE 1 — HOW FREQUENT IS FRAUD?
+# =====================================================
+st.markdown("## 1️⃣ How frequent is fraud?")
 
-st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
-st.markdown("<div class='chart-title'>Transaction Amount Distribution</div>", unsafe_allow_html=True)
-fig2, ax2 = plt.subplots()
-sns.histplot(df["Amount"], kde=True, ax=ax2, color="#D4AF37")
-st.pyplot(fig2)
-st.markdown("</div>", unsafe_allow_html=True)
-
-st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
-st.markdown("<div class='chart-title'>Time vs Amount (sample 1000)</div>", unsafe_allow_html=True)
-fig3, ax3 = plt.subplots()
-sample_df = df.sample(min(1000, len(df)), random_state=42)
-sns.scatterplot(
-    x=sample_df["Time"],
-    y=sample_df["Amount"],
-    hue=sample_df["Class"],
-    palette=["#00C985", "#D62839"],
-    alpha=0.6,
-    ax=ax3,
+st.write(
+    "**Definition:** This objective helps us understand how many fraud transactions "
+    "exist compared to legitimate transactions."
 )
-st.pyplot(fig3)
-st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
-st.markdown("<div class='chart-title'>Feature Correlation Heatmap</div>", unsafe_allow_html=True)
-fig4, ax4 = plt.subplots(figsize=(14, 10))
-sns.heatmap(df.drop("Class", axis=1).corr(), cmap="inferno", ax=ax4)
-st.pyplot(fig4)
-st.markdown("</div>", unsafe_allow_html=True)
+st.write(
+    "**What this chart shows:** The bar chart counts the number of transactions "
+    "in each class (Legitimate vs Fraud)."
+)
 
-st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
-st.markdown("<div class='chart-title'>Top Features vs Class (Violin Plots)</div>", unsafe_allow_html=True)
-top = df.corr()["Class"].abs().sort_values(ascending=False)[1:6].index.tolist()
-fig5, axs = plt.subplots(2, 3, figsize=(18, 10), constrained_layout=True)
-axs = axs.flatten()
-for i, feat in enumerate(top):
-    sns.violinplot(data=df, x="Class", y=feat, palette=["#00C985", "#D62839"], ax=axs[i])
-fig5.delaxes(axs[5])
-st.pyplot(fig5)
-st.markdown("</div>", unsafe_allow_html=True)
+fig, ax = plt.subplots()
+sns.countplot(x="Class", data=df, ax=ax)
+ax.set_xticklabels(["Legitimate", "Fraud"])
+ax.set_title("Number of Legitimate vs Fraud Transactions")
+st.pyplot(fig)
+
+st.write(
+    "**What we observe:** Fraud transactions are extremely rare compared to legitimate ones. "
+    "This means the dataset is highly imbalanced."
+)
+
+st.divider()
+
+# =====================================================
+# OBJECTIVE 2 — TRANSACTION AMOUNT COMPARISON
+# =====================================================
+st.markdown("## 2️⃣ Transaction Amount Comparison")
+
+st.write(
+    "**Definition:** This objective analyzes whether fraud transactions involve "
+    "larger amounts than legitimate transactions."
+)
+
+st.write(
+    "**What this chart shows:** The histogram compares transaction amounts for "
+    "legitimate and fraud transactions."
+)
+
+fig, ax = plt.subplots()
+ax.hist(df[df["Class"] == 0]["Amount"], bins=50, alpha=0.6, label="Legitimate")
+ax.hist(df[df["Class"] == 1]["Amount"], bins=50, alpha=0.6, label="Fraud")
+ax.set_title("Transaction Amount Distribution")
+ax.legend()
+st.pyplot(fig)
+
+st.write(
+    "**What we observe:** Fraud transactions are not always high-value. "
+    "Many frauds occur at smaller amounts to avoid detection."
+)
+
+st.divider()
+
+# =====================================================
+# OBJECTIVE 3 — FRAUD OCCURRENCE OVER TIME
+# =====================================================
+st.markdown("## 3️⃣ Fraud Occurrence Over Time")
+
+st.write(
+    "**Definition:** This objective studies how fraud transactions are distributed "
+    "over time."
+)
+
+st.write(
+    "**What this chart shows:** The line chart displays the number of fraud "
+    "transactions occurring at different time points."
+)
+
+fraud_time = df[df["Class"] == 1].groupby("Time").size()
+
+fig, ax = plt.subplots()
+ax.plot(fraud_time.index, fraud_time.values)
+ax.set_title("Fraud Transactions Over Time")
+ax.set_xlabel("Time")
+ax.set_ylabel("Fraud Count")
+st.pyplot(fig)
+
+st.write(
+    "**What we observe:** Fraud does not occur randomly. "
+    "It appears in clusters, which suggests planned or automated fraudulent activity."
+)
+
+st.divider()
+
+# =====================================================
+# OBJECTIVE 4 — FEATURE BEHAVIOR COMPARISON
+# =====================================================
+st.markdown("## 4️⃣ Feature Behavior Comparison")
+
+st.write(
+    "**Definition:** This objective compares how a numerical feature behaves "
+    "for legitimate and fraud transactions."
+)
+
+st.write(
+    "**What this chart shows:** The boxplot compares the distribution of feature V1 "
+    "for both transaction classes."
+)
+
+fig, ax = plt.subplots()
+sns.boxplot(x="Class", y="V1", data=df, ax=ax)
+ax.set_xticklabels(["Legitimate", "Fraud"])
+ax.set_title("Feature V1 Distribution by Class")
+st.pyplot(fig)
+
+st.write(
+    "**What we observe:** Although the distributions are different, they overlap. "
+    "This means simple rules cannot separate fraud clearly."
+)
+
+st.divider()
+
+# =====================================================
+# OBJECTIVE 5 — AVERAGE FEATURE COMPARISON
+# =====================================================
+st.markdown("## 5️⃣ Average Feature Comparison")
+
+st.write(
+    "**Definition:** This objective compares the average value of a feature "
+    "for legitimate and fraud transactions."
+)
+
+st.write(
+    "**What this chart shows:** The bar chart displays the mean (average) value "
+    "of feature V1 for both classes."
+)
+
+mean_values = df.groupby("Class")["V1"].mean().reset_index()
+
+fig, ax = plt.subplots()
+sns.barplot(x="Class", y="V1", data=mean_values, ax=ax)
+ax.set_xticklabels(["Legitimate", "Fraud"])
+ax.set_title("Average Value of Feature V1 by Class")
+st.pyplot(fig)
+
+st.write(
+    "**What we observe:** The average feature values are different for fraud "
+    "and legitimate transactions, but averages alone are not enough for detection."
+)
+
+st.divider()
+
+# =====================================================
+# FINAL SUMMARY
+# =====================================================
+st.markdown("## ✅ What We Learned from Analytics")
+
+st.markdown("""
+- Fraud is **rare**, creating class imbalance  
+- Fraud transactions are **not always high-value**  
+- Fraud shows **patterns over time**  
+- Feature values **overlap between classes**  
+- Average values differ, but **machine learning is required**
+""")

@@ -1,5 +1,5 @@
 __pycache__/
-*.pkl
+# removed *.pkl so the 3.5MB model gets tracked
 *.csv
 .env
 .ipynb_checkpoints/

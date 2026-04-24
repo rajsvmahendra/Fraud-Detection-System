@@ -9,6 +9,7 @@ import random
 import base64
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import utils
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Fraud Intelligence Dashboard", layout="wide")
@@ -38,8 +39,8 @@ background_video("assets/14250435_1920_1080_30fps.mp4")
 
 
 # ---------- LOAD DATA & MODEL ----------
-model = joblib.load("fraud_model.pkl")
-df_real = pd.read_csv("creditcard.csv")
+model = utils.load_model()
+df_real = utils.load_data()
 
 X = df_real.drop("Class", axis=1)
 y = df_real["Class"]
