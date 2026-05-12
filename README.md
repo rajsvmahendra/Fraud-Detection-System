@@ -1,142 +1,299 @@
-<!-- PROJECT HEADER -->
+
+<!-- ========================================= -->
+<!--           FRAUD DETECTION SYSTEM          -->
+<!-- ========================================= -->
+
 <p align="center">
-  <img src="assets/landing.png" alt="Fraud Dashboard Preview" width="750"/>
+  <img src="assets/landing.png" alt="Fraud Detection Dashboard" width="900"/>
 </p>
 
 <h1 align="center">💳 Fraud Detection System — Real-Time ML Dashboard</h1>
+
 <p align="center">
-  An end-to-end Credit Card Fraud Detection system combining Machine Learning, simulation, and interactive analytics using Streamlit.
+  An intelligent machine learning-powered dashboard that detects fraudulent credit card transactions in real time using predictive analytics and interactive visualizations.
+</p>
+
+<p align="center">
+  <a href="https://fraud-detectionsystem.streamlit.app/" target="_blank"><b>Live Demo</b></a> •
+  <a href="https://github.com/rajsvmahendra/fraud-detection-system" target="_blank"><b>GitHub Repository</b></a> •
+  <a href="https://www.linkedin.com/in/rajsvmahendra/" target="_blank"><b>LinkedIn</b></a>
 </p>
 
 ---
 
-## 📊 Project Overview
-Financial fraud is rare — but extremely costly.
+# 📌 Project Overview
 
-This project simulates how real-world financial systems detect fraudulent credit card transactions using machine learning models and transform raw transaction data into actionable insights through an interactive dashboard.
+Financial fraud is rare — but financially devastating.
 
-The system focuses on:
-- Detecting fraudulent transactions
-- Understanding fraud patterns through EDA
-- Evaluating model performance on imbalanced data
-- Making ML decisions explainable and visual
+This project demonstrates how machine learning models can identify suspicious credit card transactions through real-time prediction, exploratory data analysis, and interactive monitoring dashboards.
+
+The application simulates how modern financial institutions monitor transactions and flag potentially fraudulent activities instantly.
 
 ---
 
-## 🎯 Project Objectives
-✔ Build a machine-learning based fraud classification system  
-✔ Handle highly imbalanced transaction data  
-✔ Visualize fraud vs legitimate behavior  
-✔ Simulate real-time transaction monitoring  
-✔ Evaluate model reliability using proper metrics  
+# 🎯 Objectives
+
+- Detect fraudulent transactions using Machine Learning
+- Handle highly imbalanced financial datasets
+- Visualize fraud behavior through interactive analytics
+- Simulate real-time transaction monitoring
+- Evaluate model reliability using industry-standard metrics
+- Build a complete end-to-end deployable ML application
 
 ---
 
-## 🧠 Machine Learning Model
-- **Algorithm**: Logistic Regression  
-- **Dataset**: Kaggle Credit Card Fraud Dataset  
-- **Features**:
-  - PCA-transformed features (V1–V28)
-  - Transaction Time
-  - Transaction Amount
-- **Target Variable**:
-  - 0 → Legitimate  
-  - 1 → Fraudulent  
+# 🧠 Machine Learning Model
 
-### 📊 Evaluation Metrics
-- Accuracy  
-- Precision  
-- Recall  
-- F1 Score  
-- Confusion Matrix  
+## 🔹 Algorithm Used
+- Logistic Regression
 
-> Accuracy alone is misleading in fraud detection due to class imbalance.  
-> Precision and Recall are prioritized to minimize financial loss.
+## 🔹 Problem Type
+- Binary Classification
+
+## 🔹 Target Classes
+
+| Class | Meaning |
+|------|---------|
+| 0 | Legitimate Transaction |
+| 1 | Fraudulent Transaction |
 
 ---
 
-## 📈 Dashboard Features
+# 📊 Dataset Information
 
-### 🏠 Landing Page
-- Cinematic video background
-- Clean navigation to all modules
+### Kaggle Credit Card Fraud Detection Dataset
 
-### 🔍 Overview
-- Simulated real-time transactions
-- Fraud vs Legitimate metrics
-- Transaction trends and live table
+| Feature | Value |
+|---|---|
+| Total Transactions | 284,807 |
+| Fraud Cases | 492 |
+| Features | 30 Numerical Features |
+| Dataset Type | Highly Imbalanced |
 
-### 🧪 Prediction
-- Manual feature input
-- Fraud prediction with probability score
-
-### 📊 Analytics (EDA)
-- Class distribution
-- Transaction amount distribution
-- Time vs Amount analysis
-- Correlation heatmap
-- Violin plots for top features
-- Raw data exploration
-
-### 📉 Model Performance
-- Accuracy, Precision, Recall, F1 Score (in %)
-- Confusion Matrix visualization
+### Features Include
+- PCA-transformed variables (`V1` → `V28`)
+- Transaction Time
+- Transaction Amount
 
 ---
 
-## 🛠 Tech Stack
-- Python  
-- Streamlit  
-- Scikit-learn  
-- Pandas & NumPy  
-- Seaborn & Matplotlib  
-- Plotly  
-- VS Code  
+# ⚙️ Dashboard Features
+
+## 🏠 Landing Page
+- Cinematic animated background
+- Professional modern UI
+- Interactive navigation
 
 ---
 
-## 📦 Dataset
-- Kaggle Credit Card Fraud Dataset  
-- 284,807 transactions  
-- 492 fraud cases  
-- Highly imbalanced data  
+## 🔍 Real-Time Overview
+- Simulated live transaction monitoring
+- Fraud vs Legitimate transaction statistics
+- Dynamic transaction stream
+- Live analytics table
 
 ---
 
-## 🌍 Real-World Applications
-- Banking & Financial Institutions  
-- Payment Gateways  
-- E-commerce Platforms  
-- Fraud Monitoring Systems  
+## 🧪 Fraud Prediction Module
+Users can manually enter transaction values to:
+- Predict fraudulent transactions
+- View fraud probability score
+- Analyze model confidence
 
 ---
 
-## 📸 Dashboard Screenshots
+## 📈 Analytics Dashboard (EDA)
 
-| Overview | Analytics |
-|---------|-----------|
-| <img src="assets/overview.png" width="400"/> | <img src="assets/analytics.png" width="400"/> |
+Interactive Exploratory Data Analysis including:
 
-| Prediction | Performance |
-|-----------|-------------|
-| <img src="assets/prediction.png" width="400"/> | <img src="assets/performance.png" width="400"/> |
-
----
-
-## ▶️ Demo Video
-🎥 See full dashboard walkthrough in the demo video:
-`assets/frauddetextionDashboard.mp4`
+- Class distribution visualization
+- Transaction amount analysis
+- Time vs Amount trends
+- Correlation heatmaps
+- Violin plots for key features
+- Raw dataset exploration
 
 ---
 
-## 👤 Author
-**Rajsv Mahendra**  
-Student | Data Science & Machine Learning Enthusiast  
+## 📉 Model Performance Dashboard
 
-🔗 LinkedIn: https://www.linkedin.com/in/rajsvmahendra/
-📦 GitHub: https://github.com/rajsvmahendra  
+Performance metrics include:
+
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Confusion Matrix
+
+> ⚠️ Accuracy alone is misleading in fraud detection because of severe class imbalance.  
+> Precision and Recall are prioritized for better fraud identification.
 
 ---
 
-## ⭐ Support
-If you found this project useful, consider starring ⭐ the repository.
+# 🛠 Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Core Programming |
+| Streamlit | Interactive Web Dashboard |
+| Scikit-learn | Machine Learning |
+| Pandas & NumPy | Data Processing |
+| Plotly | Interactive Charts |
+| Seaborn & Matplotlib | Data Visualization |
+| VS Code | Development Environment |
+
+---
+
+# 🌍 Real-World Applications
+
+This system reflects practical use cases in:
+
+- 🏦 Banking Systems
+- 💳 Payment Gateways
+- 🛒 E-Commerce Platforms
+- 🔐 Financial Security Monitoring
+- 📡 Fraud Detection Infrastructure
+
+---
+
+# 📸 Dashboard Screenshots
+
+## 🔹 Overview Dashboard
+
+<p align="center">
+  <img src="assets/overview.png" width="800"/>
+</p>
+
+---
+
+## 🔹 Analytics Dashboard
+
+<p align="center">
+  <img src="assets/analytics.png" width="800"/>
+</p>
+
+---
+
+## 🔹 Prediction Module
+
+<p align="center">
+  <img src="assets/prediction.png" width="800"/>
+</p>
+
+---
+
+## 🔹 Model Performance
+
+<p align="center">
+  <img src="assets/performance.png" width="800"/>
+</p>
+
+---
+
+# 🎥 Demo Video
+
+📹 Full Dashboard Walkthrough:
+
+assets/frauddetextionDashboard.mp4
+
+---
+
+# 🚀 Live Application
+
+## 🔗 Streamlit Deployment
+
+👉 [https://fraud-detectionsystem.streamlit.app/](https://fraud-detectionsystem.streamlit.app/)
+
+---
+
+# ⚡ Installation & Setup
+
+## 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/rajsvmahendra/fraud-detection-system.git
+```
+
+## 2️⃣ Navigate to Project Folder
+
+```bash
+cd fraud-detection-system
+```
+
+## 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## 4️⃣ Run Streamlit App
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# 📂 Project Structure
+
+```bash
+fraud-detection-system/
+│
+├── assets/
+│   ├── landing.png
+│   ├── overview.png
+│   ├── analytics.png
+│   ├── prediction.png
+│   ├── performance.png
+│   └── frauddetextionDashboard.mp4
+│
+├── dataset/
+│
+├── models/
+│
+├── app.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# 📈 Model Evaluation Metrics
+
+| Metric           | Importance                  |
+| ---------------- | --------------------------- |
+| Accuracy         | Overall correctness         |
+| Precision        | Controls false positives    |
+| Recall           | Detects actual fraud cases  |
+| F1 Score         | Balances Precision & Recall |
+| Confusion Matrix | Visual performance analysis |
+
+---
+
+# 👨‍💻 Author
+
+## Rajsv Mahendra
+
+Student • Data Science & Machine Learning Enthusiast
+
+🔗 LinkedIn:
+[https://www.linkedin.com/in/rajsvmahendra/](https://www.linkedin.com/in/rajsvmahendra/)
+
+📦 GitHub:
+[https://github.com/rajsvmahendra](https://github.com/rajsvmahendra)
+
+---
+
+# ⭐ Support
+
+If you found this project useful:
+
+* ⭐ Star the repository
+* 🍴 Fork the project
+* 📢 Share it with others
+
+---
+
+<p align="center">
+  Built with Python, Machine Learning, and a suspicious amount of caffeine ☕
+</p>
